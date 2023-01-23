@@ -77,52 +77,76 @@ notifications.value.forEach((notification) => {
 
 <template>
   <header>
-    <h1>
-      Notifications <span v-if="unRead > 0">{{ unRead }}</span>
-    </h1>
+    <div class="heading">
+      <h1>Notifications</h1>
+      <span v-if="unRead > 0" class="unread">{{ unRead }}</span>
+    </div>
     <button @click="markRead">Mark all as read</button>
   </header>
   <ul>
-    <li v-for="notification in notifications" :key="notification.name">
-      <img :src="notification.avatar" :alt="notification.avatar" />
+    <li
+      v-for="notification in notifications"
+      :key="notification.name"
+      :class="{ pale: !notification.read }"
+    >
+      <img
+        :src="notification.avatar"
+        :alt="notification.avatar"
+        class="avatar"
+      />
       <div v-if="notification.event === 'Reaction'">
         <p>
-          {{ notification.name }} reacted
+          <span class="name">{{ notification.name }}</span>
+          <span class="action">reacted to your recent post</span>
           <span class="notice">{{ notification.post }}</span>
-          <span class="red"></span>
+          <span :class="{ red: !notification.read }"></span>
         </p>
-        <p>{{ notification.created_at }}</p>
+        <p class="time">{{ notification.created_at }}</p>
       </div>
       <div v-if="notification.event === 'follow'">
-        <p>{{ notification.name }} followed you <span class="red"></span></p>
-        <p>{{ notification.created_at }}</p>
+        <p>
+          <span class="name">{{ notification.name }}</span>
+          <span class="action">followed you</span>
+          <span :class="{ red: !notification.read }"></span>
+        </p>
+        <p class="time">{{ notification.created_at }}</p>
       </div>
       <div v-if="notification.event === 'Joined club'">
         <p>
-          {{ notification.name }} has joined your group
+          <span class="name">{{ notification.name }}</span>
+          <span class="action">has joined your group</span>
           <span class="notice">{{ notification.group }}</span>
-          <span class="red"></span>
+          <span :class="{ red: !notification.read }"></span>
         </p>
-        <p>{{ notification.created_at }}</p>
+        <p class="time">{{ notification.created_at }}</p>
       </div>
       <div v-if="notification.event === 'comment'">
-        {{ notification.name }} commented on your picture
-        <span>{{ notification.created_at }}</span>
+        <p>
+          <span class="name">{{ notification.name }}</span>
+          <span class="action">commented on your picture</span>
+          <span :class="{ red: !notification.read }"></span>
+          <span class="time">{{ notification.created_at }}</span>
+        </p>
         <img :src="notification.picture" />
       </div>
       <div v-if="notification.event === 'Left club'">
         <div>
           <p>
-            {{ notification.name }} left the group
-            <span>{{ notification.group }}</span>
+            <span class="name">{{ notification.name }}</span>
+            <span class="action">left the group</span>
+            <span class="blue">{{ notification.group }}</span>
+            <span :class="{ red: !notification.read }"></span>
           </p>
-          <p>{{ notification.created_at }}</p>
+          <p class="time">{{ notification.created_at }}</p>
         </div>
       </div>
       <div v-if="notification.event === 'sent message'">
         <div>
-          <p>{{ notification.name }} sent you a private message</p>
-          <p>{{ notification.created_at }}</p>
+          <p>
+            <span class="name">{{ notification.name }}</span>
+            <span class="action">sent you a private message</span>
+          </p>
+          <p class="time">{{ notification.created_at }}</p>
         </div>
 
         <p class="message">{{ notification.message }}</p>
