@@ -115,12 +115,12 @@ notifications.value.forEach((notification) => {
         <p>
           <span class="name">{{ notification.name }}</span>
           <span class="action">has joined your group</span>
-          <span class="notice">{{ notification.group }}</span>
+          <span class="notice club">{{ notification.group }}</span>
           <span :class="{ red: !notification.read }"></span>
         </p>
         <p class="time">{{ notification.created_at }}</p>
       </div>
-      <div v-if="notification.event === 'comment'">
+      <div v-if="notification.event === 'comment'" class="flex">
         <p>
           <span class="name">{{ notification.name }}</span>
           <span class="action">commented on your picture</span>
@@ -134,7 +134,7 @@ notifications.value.forEach((notification) => {
           <p>
             <span class="name">{{ notification.name }}</span>
             <span class="action">left the group</span>
-            <span class="blue">{{ notification.group }}</span>
+            <span class="notice club">{{ notification.group }}</span>
             <span :class="{ red: !notification.read }"></span>
           </p>
           <p class="time">{{ notification.created_at }}</p>
